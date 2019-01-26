@@ -1,0 +1,24 @@
+package com.使用execute方法;
+//启用线程池
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+class RunableThread implements Runnable{
+    public void run(){
+        for(int i=0; i<50; i++){
+            System.out.println(Thread.currentThread().getName()+"、"+i);
+        }
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        RunableThread runableThread = new RunableThread();
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(3,5,2000,
+                TimeUnit.MILLISECONDS,new LinkedBlockingDeque<Runnable>());
+        for(int i=0; i<5; i++){
+            threadPoolExecutor.execute(runableThread);
+        }
+    }
+}
